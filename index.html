@@ -5,20 +5,71 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<img src="" alt="" class="src" />
-		<button class="submit">Randomize</button>
+		<div class="container">
+			<div class="holder">
+				<img src="" alt="" class="src" />
+				<button class="submit">Randomize</button>
+			</div>
+		</div>
+
+		<style>
+			.submit {
+				height: 100px;
+				width: 300px;
+				margin-top: 30px;
+
+			}
+
+			img {
+				display: inline-block;
+			}
+
+			.container {
+				height: 100%;
+				padding: 0;
+				margin: 0;
+
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				background: black;
+			}
+
+			.holder {
+				display: flex;
+				flex-flow: column;
+				align-items: center;
+				justify-content: center;
+				position: absolute;
+				margin: 0 auto;
+
+				width: 800px;
+				height: auto;
+			}
+		</style>
 		<script>
 			const img = document.querySelector("img");
-			fetch(
-				"https://api.giphy.com/v1/gifs/translate?api_key=noO4fH6rAx5KQFgp9mZdPVjFad7a8HHm&s=cats",
-				{ mode: "cors" }
-			)
-				.then(function (response) {
-					return response.json();
-				})
-				.then(function (response) {
-					img.src = response.data.images.original.url;
-				});
+
+			//Query Selector
+			const button = document.querySelector(".submit");
+
+			const getImage = function () {
+				fetch(
+					"https://api.giphy.com/v1/gifs/translate?api_key=noO4fH6rAx5KQFgp9mZdPVjFad7a8HHm&s=cats",
+					{ mode: "cors" }
+				)
+					.then(function (response) {
+						return response.json();
+					})
+					.then(function (response) {
+						img.src = response.data.images.original.url;
+					});
+			};
+
+			getImage();
+
+			button.addEventListener("click", getImage);
 		</script>
 	</body>
 </html>
