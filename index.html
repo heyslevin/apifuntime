@@ -9,6 +9,10 @@
 			<div class="holder">
 				<img src="" alt="" class="src" />
 				<button class="submit">Randomize</button>
+				<form action="">
+					<input name="searchInput" type="text" />
+					<button type="button" class="search">Randomize</button>
+				</form>
 			</div>
 		</div>
 
@@ -17,7 +21,9 @@
 				height: 100px;
 				width: 300px;
 				margin-top: 30px;
+			}
 
+			.search {
 			}
 
 			img {
@@ -49,14 +55,40 @@
 			}
 		</style>
 		<script>
+
+
+
 			const img = document.querySelector("img");
 
-			//Query Selector
+			//Query Selectors
 			const button = document.querySelector(".submit");
+			const searchButton = document.querySelector(".search");
+			const searchInput = document.querySelector('input[name="searchInput"]')
 
-			const getImage = function () {
+			//Global
+			let newURL;
+
+
+			const getInput = function() {
+
+				value = searchInput.value;
+				
+				if (value === undefined || value === "") {
+					value = "cat";		
+				}
+
+				newURL = `https://api.giphy.com/v1/gifs/translate?api_key=noO4fH6rAx5KQFgp9mZdPVjFad7a8HHm&s=${value}`
+
+				//Clear box 	
+				searchInput.value = "";
+
+				getImage(newURL);
+			};
+
+			const getImage = function (newURL) {
+
 				fetch(
-					"https://api.giphy.com/v1/gifs/translate?api_key=noO4fH6rAx5KQFgp9mZdPVjFad7a8HHm&s=cats",
+					newURL,
 					{ mode: "cors" }
 				)
 					.then(function (response) {
@@ -67,9 +99,9 @@
 					});
 			};
 
-			getImage();
-
-			button.addEventListener("click", getImage);
+			//Add events
+			button.addEventListener("click", getInput);
+			searchButton.addEventListener("click",getInput);
 		</script>
 	</body>
 </html>
